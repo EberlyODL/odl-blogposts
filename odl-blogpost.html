@@ -1,0 +1,57 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+
+<!--
+`odl-blogpost`
+
+
+@demo demo/index.html
+-->
+
+<dom-module id="odl-blogpost">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    
+    <iron-ajax
+       auto
+       id="getPosts"
+       url="[[url]]"
+       handle-as="json"
+       on-response="handleResponse"></iron-ajax>
+    
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'odl-blogpost',
+
+      properties: {
+        limit: {
+          type: String,
+          value: 10
+        },
+        items: {
+          type: Array,
+          value: [],
+        },
+        url: {
+          type: String,
+          computed: '_computeUrl(limit)'
+        }
+      },
+
+     _computeUrl: function (limit) {
+       return `/api/blog-post?limit=${limit}`;
+     },
+
+      handleResponse: function (e) {
+      }
+
+    });
+  </script>
+</dom-module>
